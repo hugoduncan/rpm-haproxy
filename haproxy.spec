@@ -1,7 +1,7 @@
 # To Build:
 #
 # sudo yum -y install rpmdevtools && rpmdev-setuptree
-# sudo yum -y install pcre-devel 
+# sudo yum -y install pcre-devel openssl-devel
 # wget https://raw.github.com/nmilford/rpm-haproxy/master/haproxy.spec -O ~/rpmbuild/SPECS/haproxy.spec
 # wget http://haproxy.1wt.eu/download/1.5/src/devel/haproxy-1.5-dev19.tar.gz -O ~/rpmbuild/SOURCES/haproxy-1.5-dev19.tar.gz
 # rpmbuild -bb  ~/rpmbuild/SPECS/haproxy.spec
@@ -19,7 +19,7 @@ Group: System Environment/Daemons
 URL: http://haproxy.1wt.eu/
 Source0: http://haproxy.1wt.eu/download/1.5/src/devel/%{name}-%{version}-%{dev_rel}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
-BuildRequires: pcre-devel
+BuildRequires: pcre-devel, openssl-devel
 Requires: /sbin/chkconfig, /sbin/service
 
 %description
@@ -45,7 +45,7 @@ risking the system's stability.
 %define __perl_requires /bin/true
 
 %build
-%{__make} USE_PCRE=1 DEBUG="" ARCH=%{_target_cpu} TARGET=linux26
+%{__make} USE_PCRE=1 USE_OPENSSL=1 USE_ZLIB=1 DEBUG="" ARCH=%{_target_cpu} TARGET=linux26
 
 %install
 [ "%{buildroot}" != "/" ] && %{__rm} -rf %{buildroot}
